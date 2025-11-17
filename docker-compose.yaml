@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  pcd_converter:
+    image: nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pcd_converter
+    working_dir: /workspace
+    volumes:
+      - ./MAPS/:/workspace/MAPS/
+      - ./PCD_FILES/:/workspace/PCD_FILES/
+      - ./workspace/:/workspace
+    stdin_open: true
+    tty: true
+    shm_size: "32g" 
+
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+
+    command: bash
